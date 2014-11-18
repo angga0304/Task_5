@@ -1,0 +1,62 @@
+<table class="table" style="width:600px">
+  <tr align="center">
+    <td><h1> <%= @article.title %> </h1></td>
+  </tr>
+  <tr align="center" class="danger">
+    <td><%= image_tag @article.photo.url(:medium) %></td>
+  </tr>
+  <tr style="font-size:20px;">
+    <td><p><%= @article.content %> </p></td>
+  </tr>
+  <tr>
+    <th>Komentar</th>
+  </tr>
+    <% @article.comments.each do |comment| %>
+      <tr>
+        <td>
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Comment</h3>
+            </div>
+            <div class="panel-body">
+              <%= comment.content %>
+            </div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  <tr>
+    <%= form_for @article.comments.new, url: comments_path  do |f| %>
+    <table>
+      <tr>
+        <td>
+          <h3>Komentar Anda</h3>
+        </td>
+      </tr>
+      <tr>
+        <td><%= f.hidden_field :article_id %><%= f.text_area :content, cols: 70, rows: 5, placeholder: "Put your Comments here" %></td>
+      </tr>
+      <tr align="right">
+        <td>
+          <%= f.submit :submit , class: "btn btn-primary" %>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+  </tr>
+  <tr style="font-size:16px;">
+    <td><p>Download <%= link_to "Export to xlsx", export_articles_path(@article.id) %> | <%= link_to "Export to pdf", pdf_articles_path(@article.id)  %></p><p> <%= link_to 'back to index', articles_path %> </p></td>
+  </tr>
+  <tr>
+    <td>
+      <%= form_tag to_import_articles_path, multipart: true do |f| %>
+        <table>
+          <tr>
+            <td><%= file_field_tag :file %></td>
+            <td><%= submit_tag "Import", class: "btn btn-primary" %></td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+  </tr>
+</table>

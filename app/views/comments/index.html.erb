@@ -1,0 +1,9 @@
+<h1>Comments#index</h1>
+
+<% @comments.each do |comment| %>
+  <p>
+    <%= comment.article_id %>
+    <%= comment.content %>
+  </p>
+  <br />
+<% end %>

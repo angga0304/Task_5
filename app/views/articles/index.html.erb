@@ -1,0 +1,33 @@
+<table>
+  <tr>
+    <td><%= image_tag("logo.jpeg", :alt => "rss feed", width: "150", height:"150")  %></td>
+    <td><h1>Pikiran N'Deso</h1></td>
+  </tr>
+</table>
+
+<hr>
+<br/>
+<h1>Articles#index</h1>
+<%= link_to 'Create New', new_article_path %>
+<% @articles.each do |article| %>
+<table>
+  <tr>
+    <td rowspan ="3"><%= image_tag article.photo.url(:thumb) %></td>
+    <td><h3><%= article.title %></h3></td>
+  </tr>
+  <tr>
+    <td><p><%= article.content.truncate(20) %><%= link_to "read more",article_path(article.id) %></p></td>
+  </tr>
+  <tr>
+    <td>
+      <p>
+      <span><%= link_to "edit", edit_article_path(article.id), class: "btn btn-primary" %></span>
+      <span>|</span>
+      <span><%= link_to 'delete', article_path(article.id), method: "DELETE", data:{confirm: 'Delete this data ?'},class: "btn btn-danger" %></span>
+      </p>
+    </td>
+  </tr>
+</table>
+<hr/>
+<% end %>
+<%= paginate @articles %>
